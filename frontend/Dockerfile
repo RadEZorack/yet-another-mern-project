@@ -1,20 +1,20 @@
-# Build Stage
-FROM node:18 as build
+# Use official Node.js LTS version
+FROM node:18
 
+# Set working directory
 WORKDIR /app
 
+# Copy package files
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
+# Copy source code
 COPY . .
 
-RUN npm run build
+# Expose the port
+EXPOSE 3000
 
-# Production Stage
-FROM nginx:alpine
-
-COPY --from=build /app/build /usr/share/nginx/html
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+# Start the React development server
+CMD ["npm", "start"]
