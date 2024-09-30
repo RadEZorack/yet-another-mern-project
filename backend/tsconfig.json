@@ -5,7 +5,10 @@
       "outDir": "dist",
       "rootDir": "src",
       "strict": true,
-      "esModuleInterop": true
-    }
+      "esModuleInterop": true,
+      "moduleResolution": "node"
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist"]
   }
   
