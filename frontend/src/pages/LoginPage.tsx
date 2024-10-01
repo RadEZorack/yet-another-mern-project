@@ -1,11 +1,13 @@
 // src/pages/LoginPage.tsx
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
   const auth = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -13,6 +15,7 @@ const LoginPage: React.FC = () => {
       try {
         await auth.login(email, password);
         // Redirect to dashboard or home page
+        navigate(`/dashboard`);
       } catch (error) {
         console.error('Login failed', error);
       }

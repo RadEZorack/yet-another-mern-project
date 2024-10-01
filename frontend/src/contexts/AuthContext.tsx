@@ -41,14 +41,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = async (email: string, password: string) => {
     const response = await axios.post('http://localhost:5001/api/auth/login', { email, password });
     const { token, user } = response.data;
-    console.log(token, user)
     setToken(token);
     setUser(user);
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    console.log(localStorage);
-    console.log(axios.defaults.headers)
   };
 
   const register = async (username: string, email: string, password: string) => {
