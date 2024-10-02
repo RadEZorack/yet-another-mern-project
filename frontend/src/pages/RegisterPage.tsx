@@ -1,12 +1,14 @@
 // src/pages/RegisterPage.tsx
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterPage: React.FC = () => {
   const auth = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,6 +16,7 @@ const RegisterPage: React.FC = () => {
       try {
         await auth.register(username, email, password);
         // Redirect to dashboard or home page
+        navigate(`/dashboard`);
       } catch (error) {
         console.error('Registration failed', error);
       }
