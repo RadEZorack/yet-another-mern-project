@@ -10,7 +10,8 @@ services:
     environment:
       - PORT=5001
       - MONGO_URL=mongodb://mongo:27017/mydatabase
-      - JWT_SECRET="${JWT_SECRET}"
+      - JWT_SECRET=${JWT_SECRET}
+      - MESHY_API_KEY=${MESHY_API_KEY}
     depends_on:
       - mongo
 
