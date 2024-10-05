@@ -30,7 +30,7 @@ interface ModelRequest {
   negative_prompt?: string;
   mode: string;
   resultId: string;
-  status: 'pending' | 'completed' | 'failed';
+  status: 'NOT_STARTED' | 'PENDING' | 'IN_PROGRESS' | 'SUCCEEDED' | 'FAILED' | 'EXPIRED';
   createdAt: string;
   updatedAt: string;
   glb?: string; // URL
@@ -40,6 +40,14 @@ interface ModelRequest {
   mtl?: string; // URL
   thumbnail_url?: string; // URL
   video_url?: string; // URL;
+  // Texture
+  textureResultId?: string;
+  textureStatus?: 'NOT_STARTED' | 'PENDING' | 'IN_PROGRESS' | 'SUCCEEDED' | 'FAILED' | 'EXPIRED';
+  // URLs
+  base_color?: string;
+  metallic?: string;
+  normal?: string;
+  roughness?: string;
 }
 
 const Dashboard: React.FC = () => {
@@ -203,7 +211,8 @@ const Dashboard: React.FC = () => {
                                     primary={<Typography variant="h6">{model.prompt}</Typography>}
                                     secondary={
                                       <>
-                                        <Typography>Status: {model.status}</Typography>
+                                        <Typography>Model Status: {model.status}</Typography>
+                                        <Typography>Texture Status: {model.textureStatus}</Typography>
                                         <Typography>
                                           Created at: {new Date(model.createdAt).toLocaleString()}
                                         </Typography>

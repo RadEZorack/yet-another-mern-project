@@ -19,6 +19,14 @@ export interface IModelRequest extends Document {
   mtl?: string; // URL
   thumbnail_url?: string; // URL
   video_url?: string; // URL;
+  // Texture
+  textureResultId?: string;
+  textureStatus?: 'PENDING' | 'IN_PROGRESS' | 'SUCCEEDED' | 'FAILED' | 'EXPIRED';
+  // texture_urls
+  base_color?: string; // URL
+  metallic?: string; // URL
+  normal?: string; // URL
+  roughness?: string; // URL
 }
 
 const modelRequestSchema = new Schema<IModelRequest>(
@@ -41,7 +49,19 @@ const modelRequestSchema = new Schema<IModelRequest>(
     obj: { type: String },
     mtl: { type: String },
     thumbnail_url: { type: String },
-    video_url: { type: String }
+    video_url: { type: String },
+    // Texture
+    textureResultId: { type: String },
+    textureStatus: {
+      type: String,
+      enum: ['NOT_STARTED', 'PENDING', 'IN_PROGRESS', 'SUCCEEDED', 'FAILED', 'EXPIRED'],
+      default: 'NOT_STARTED',
+    },
+    // URLs
+    base_color: { type: String },
+    metallic: { type: String },
+    normal: { type: String },
+    roughness: { type: String }
   },
   { timestamps: true }
 );

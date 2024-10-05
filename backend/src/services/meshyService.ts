@@ -1,33 +1,13 @@
 // src/services/meshyService.ts
 import axios from 'axios';
 
-const MESHY_API_URL = 'https://api.meshy.ai/v2/text-to-3d';
+const MESHY_API_URL = 'https://api.meshy.ai';
 const MESHY_API_KEY = process.env.MESHY_API_KEY;
-
-export const generate3DModel = async (textInput: string): Promise<string> => {
-  try {
-    const response = await axios.post(
-      MESHY_API_URL,
-      { prompt: textInput },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${MESHY_API_KEY}`,
-        },
-      }
-    );
-    // Assuming the API returns a URL to the 3D model
-    return response.data.modelUrl;
-  } catch (error) {
-    console.error('Error generating 3D model:', error);
-    throw new Error('Could not generate 3D model');
-  }
-};
 
 // src/services/meshyService.ts
 export const checkModelStatus = async (resultId: string): Promise<any> => {
   try {
-    const response = await axios.get(`${MESHY_API_URL}/${resultId}`, {
+    const response = await axios.get(`${MESHY_API_URL}/v2/text-to-3d/${resultId}`, {
       headers: {
         Authorization: `Bearer ${MESHY_API_KEY}`,
       },
@@ -35,6 +15,52 @@ export const checkModelStatus = async (resultId: string): Promise<any> => {
     return response.data;
   } catch (error) {
     console.error('Error checking model status:', error);
+    throw error;
+  }
+};
+
+// New function to initiate texture request
+export const initiateTextureRequest = async (model_url: string, object_prompt: string, art_style: string, negative_prompt: string): Promise<any> => {
+  try {
+    const response = await axios.post(
+      `${MESHY_API_URL}/v1/text-to-texture`,
+      {
+        model_url: model_url,
+        object_prompt: object_prompt,
+        style_prompt: "rainbow colors",
+        enable_original_uv: false,
+        enable_pbr: false,
+        art_style: art_style,
+        negative_prompt: negative_prompt
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${MESHY_API_KEY}`,
+        },
+      }
+    );
+
+    return {
+      resultId: response.data.result,
+    };
+  } catch (error) {
+    console.error('Error initiating texture request:', error);
+    throw error;
+  }
+};
+
+// New function to check texture status
+export const checkTextureStatus = async (resultId: string): Promise<any> => {
+  try {
+    const response = await axios.get(`${MESHY_API_URL}/v1/text-to-texture/${resultId}`, {
+      headers: {
+        Authorization: `Bearer ${MESHY_API_KEY}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error checking texture status:', error);
     throw error;
   }
 };
