@@ -20,18 +20,19 @@ export const checkModelStatus = async (resultId: string): Promise<any> => {
 };
 
 // New function to initiate texture request
-export const initiateTextureRequest = async (model_url: string, object_prompt: string, art_style: string, negative_prompt: string): Promise<any> => {
+export const initiateTextureRequest = async (preview_task_id: string): Promise<any> => {
   try {
     const response = await axios.post(
-      `${MESHY_API_URL}/v1/text-to-texture`,
+      `${MESHY_API_URL}/v2/text-to-3d`,
       {
-        model_url: model_url,
-        object_prompt: object_prompt,
-        style_prompt: "rainbow colors",
-        enable_original_uv: false,
-        enable_pbr: false,
-        art_style: art_style,
-        negative_prompt: negative_prompt
+        mode: "refine",
+        preview_task_id: preview_task_id
+        // model_url: model_url,
+        // object_prompt: object_prompt,
+        // enable_original_uv: false,
+        // enable_pbr: false,
+        // art_style: art_style,
+        // negative_prompt: negative_prompt
       },
       {
         headers: {
@@ -53,7 +54,7 @@ export const initiateTextureRequest = async (model_url: string, object_prompt: s
 // New function to check texture status
 export const checkTextureStatus = async (resultId: string): Promise<any> => {
   try {
-    const response = await axios.get(`${MESHY_API_URL}/v1/text-to-texture/${resultId}`, {
+    const response = await axios.get(`${MESHY_API_URL}/v2/text-to-3d/${resultId}`, {
       headers: {
         Authorization: `Bearer ${MESHY_API_KEY}`,
       },

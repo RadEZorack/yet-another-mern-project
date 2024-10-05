@@ -5,6 +5,7 @@ import mongoose, { Schema, model, Document, Types } from 'mongoose';
 export interface IModelRequest extends Document {
   user: Types.ObjectId; // Updated type
   prompt: string;
+  style_prompt?: string;
   art_style: string;
   negative_prompt?: string;
   mode: string;
@@ -33,6 +34,7 @@ const modelRequestSchema = new Schema<IModelRequest>(
   {
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true }, // Updated type
     prompt: { type: String, required: true },
+    style_prompt: { type: String },
     art_style: { type: String, required: true },
     negative_prompt: { type: String },
     mode: { type: String, required: true },

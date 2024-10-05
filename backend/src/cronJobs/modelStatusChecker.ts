@@ -10,6 +10,7 @@ cron.schedule('*/1 * * * *', async () => {
   for (const model of pendingModels) {
     try {
       const statusResponse = await checkModelStatus(model.resultId);
+      console.log(statusResponse);
       // Update the model status based on the response
       if (statusResponse.status === 'SUCCEEDED') {
         model.status = 'SUCCEEDED';
@@ -21,10 +22,11 @@ cron.schedule('*/1 * * * *', async () => {
         model.mtl = statusResponse.model_urls.mtl; // URL
         model.thumbnail_url = statusResponse.thumbnail_url; // URL
         model.video_url = statusResponse.video_url; // URL;
+        // model.base_color = statusResponse.texture_urls[0].base_color; // URL
         await model.save();
         console.log(`Model ${model.resultId} SUCCEEDED.`);
 
-        const textureResult = await initiateTextureRequest(model.obj!, model.prompt, model.art_style, model.negative_prompt!);
+        const textureResult = await initiateTextureRequest(model.resultId);
         model.textureResultId = textureResult.resultId;
         model.textureStatus = 'PENDING';
         await model.save();
@@ -65,9 +67,9 @@ cron.schedule('*/1 * * * *', async () => {
         // model.mtl = statusResponse.model_urls.mtl; // URL
         model.thumbnail_url = statusResponse.thumbnail_url; // URL
         model.base_color = statusResponse.texture_urls[0].base_color; // URL
-        model.metallic = statusResponse.texture_urls[0].metallic; // URL
-        model.normal = statusResponse.texture_urls[0].normal; // URL
-        model.roughness = statusResponse.texture_urls[0].roughness; // URL
+        // model.metallic = statusResponse.texture_urls[0].metallic; // URL
+        // model.normal = statusResponse.texture_urls[0].normal; // URL
+        // model.roughness = statusResponse.texture_urls[0].roughness; // URL
         await model.save();
         console.log(`Texture ${model.resultId} SUCCEEDED.`);
 

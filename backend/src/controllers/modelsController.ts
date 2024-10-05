@@ -7,13 +7,14 @@ const MESHY_API_URL = 'https://api.meshy.ai/v2/text-to-3d';
 const MESHY_API_KEY = process.env.MESHY_API_KEY;
 
 export const createModel = async (req: Request, res: Response) => {
-  const { prompt, art_style, negative_prompt, mode } = req.body;
+  const { prompt, style_prompt, art_style, negative_prompt, mode } = req.body;
   const userId = (req as any).user.id; // Assuming user ID is attached to the request by authMiddleware
 
   const headers = { Authorization: `Bearer ${MESHY_API_KEY}` };
   const payload = {
     mode: mode,
     prompt: prompt,
+    style_prompt: style_prompt,
     art_style: art_style,
     negative_prompt: negative_prompt,
   };
@@ -33,6 +34,7 @@ export const createModel = async (req: Request, res: Response) => {
     const modelRequest = new ModelRequest({
       user: userId,
       prompt,
+      style_prompt,
       art_style,
       negative_prompt,
       mode,

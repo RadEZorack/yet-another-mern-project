@@ -26,6 +26,7 @@ import axios from 'axios';
 interface ModelRequest {
   _id: string;
   prompt: string;
+  style_prompt?: string;
   art_style: string;
   negative_prompt?: string;
   mode: string;
@@ -55,6 +56,7 @@ const Dashboard: React.FC = () => {
 
   // Form state
   const [prompt, setPrompt] = useState('');
+  // const [stylePrompt, setStylePrompt] = useState('');
   const [artStyle, setArtStyle] = useState('realistic');
   const [negativePrompt, setNegativePrompt] = useState('low quality, low resolution, low poly, ugly');
   const [loading, setLoading] = useState(false);
@@ -89,6 +91,7 @@ const Dashboard: React.FC = () => {
     try {
       const response = await axios.post('http://localhost:5001/api/models', {
         prompt,
+        // style_prompt: stylePrompt,
         art_style: artStyle,
         negative_prompt: negativePrompt,
         mode: 'preview',
@@ -226,6 +229,15 @@ const Dashboard: React.FC = () => {
                                             >
                                               Your browser does not support the video tag.
                                             </video>
+                                        )}
+                                        {model.thumbnail_url && (
+                                            <img
+                                              width="320"
+                                              height="240"
+                                              alt={model.prompt}
+                                              src={model.thumbnail_url}
+                                              style={{ maxWidth: '100%', marginTop: '10px' }}
+                                            />
                                         )}
                                       </>
                                     }
