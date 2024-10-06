@@ -42,6 +42,7 @@ cron.schedule('*/1 * * * *', async () => {
         console.log(`Model ${model.resultId} PENDING.`);
       } else {
         model.status = statusResponse.status;
+        model.progress = statusResponse.progress;
         await model.save();
         console.log(`Model ${model.resultId} ${statusResponse.status}.`);
       }
@@ -85,6 +86,7 @@ cron.schedule('*/1 * * * *', async () => {
 
       } else {
         model.textureStatus = statusResponse.status;
+        model.progress = statusResponse.progress;
         await model.save();
         console.log(`Texture ${model.resultId} ${statusResponse.status}.`);
       }

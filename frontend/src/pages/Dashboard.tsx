@@ -34,6 +34,7 @@ interface ModelRequest {
   status: 'NOT_STARTED' | 'PENDING' | 'IN_PROGRESS' | 'SUCCEEDED' | 'FAILED' | 'EXPIRED';
   createdAt: string;
   updatedAt: string;
+  progress: number;
   glb?: string; // URL
   fbx?: string; // URL
   usdz?: string; // URL
@@ -214,11 +215,25 @@ const Dashboard: React.FC = () => {
                                     primary={<Typography variant="h6">{model.prompt}</Typography>}
                                     secondary={
                                       <>
-                                        <Typography>Model Status: {model.status}</Typography>
-                                        <Typography>Texture Status: {model.textureStatus}</Typography>
+                                        <Typography>Model Status: {model.status} {model.progress && (<>{model.progress}%</>)}</Typography>
+                                        <Typography>Texture Status: {model.textureStatus} {model.progress && (<>{model.progress}%</>)}</Typography>
                                         <Typography>
                                           Created at: {new Date(model.createdAt).toLocaleString()}
                                         </Typography>
+                                        {model.glb && (
+                                          <>
+                                            <Typography>Textured Model:</Typography>
+                                            <Button
+                                              variant="contained"
+                                              color="primary"
+                                              href={model.glb}
+                                              download
+                                              sx={{ mt: 1 }}
+                                            >
+                                              Download .glb File
+                                            </Button>
+                                          </>
+                                        )}
                                         {model.video_url && (
                                             <video
                                               width="320"
@@ -233,10 +248,10 @@ const Dashboard: React.FC = () => {
                                         {model.thumbnail_url && (
                                             <img
                                               width="320"
-                                              height="240"
+                                              height="320"
                                               alt={model.prompt}
                                               src={model.thumbnail_url}
-                                              style={{ maxWidth: '100%', marginTop: '10px' }}
+                                              style={{ maxWidth: '100%' }}
                                             />
                                         )}
                                       </>

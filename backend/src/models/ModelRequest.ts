@@ -13,6 +13,7 @@ export interface IModelRequest extends Document {
   status: 'PENDING' | 'IN_PROGRESS' | 'SUCCEEDED' | 'FAILED' | 'EXPIRED';
   createdAt: Date;
   updatedAt: Date;
+  progress?: number;
   glb?: string; // URL
   fbx?: string; // URL
   usdz?: string; // URL
@@ -44,6 +45,7 @@ const modelRequestSchema = new Schema<IModelRequest>(
       enum: ['PENDING', 'IN_PROGRESS', 'SUCCEEDED', 'FAILED', 'EXPIRED'],
       default: 'PENDING',
     },
+    progress: { type: Number },
     // URLs
     glb: { type: String },
     fbx: { type: String },
