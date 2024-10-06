@@ -6,6 +6,7 @@ import authRoutes from './routes/auth';
 import { authMiddleware } from './middleware/authMiddleware';
 import modelsRoutes from './routes/models';
 import './cronJobs/modelStatusChecker';
+import proxyRouter from './routes/proxy';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/models', modelsRoutes);
+app.use('/api/proxy', proxyRouter);
 
 // Protected Route Example
 app.get('/api/protected', authMiddleware, (req, res) => {

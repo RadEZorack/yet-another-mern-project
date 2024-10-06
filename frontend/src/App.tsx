@@ -10,6 +10,7 @@ import HomePage from './pages/HomePage';
 import TermsPage from './pages/TermsPage';
 import PrivacyPage from './pages/PrivacyPage';
 import { Helmet } from 'react-helmet';
+import PlatterDesigner from './components/PlatterDesigner';
 
 function App() {
   return (
@@ -28,6 +29,14 @@ function App() {
           <Route path="/register" Component={RegisterPage} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
+          <Route
+            path="/platter"
+            element={
+              <PrivateRoute>
+                <PlatterDesigner />
+              </PrivateRoute>
+              }
+          />
           <Route
             path="/dashboard"
             element={
