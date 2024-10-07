@@ -11,6 +11,7 @@ import TermsPage from './pages/TermsPage';
 import PrivacyPage from './pages/PrivacyPage';
 import { Helmet } from 'react-helmet';
 import PlatterDesigner from './components/PlatterDesigner';
+import Header from './components/Header';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         />
       </Helmet>
       <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" Component={LoginPage} />

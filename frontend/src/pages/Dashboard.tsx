@@ -21,6 +21,7 @@ import {
   ListItemText,
 } from '@mui/material';
 import axios from 'axios';
+import PlatterDesigner from '../components/PlatterDesigner';
 
 // Define the interface
 interface ModelRequest {
@@ -113,17 +114,16 @@ const Dashboard: React.FC = () => {
 
   return (
     <>
-      <AppBar position="static">
+      {/* <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Dashboard
           </Typography>
-          {/* Add logout button or other navigation links */}
           <Button color="inherit" onClick={auth.logout}>
             Logout
           </Button>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       {/* Rest of your content */}
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Typography variant="h4" gutterBottom>

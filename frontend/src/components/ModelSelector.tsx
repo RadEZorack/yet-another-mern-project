@@ -5,22 +5,31 @@ interface Model {
     _id: string;
     prompt: string;
     glb: string;
+    thumbnail_url: string
 }
   
 interface ModelSelectorProps {
     models: Model[];
-    onAddModel: (url: string) => void;
+    onAddModel: (url: string, name: string) => void;
 }
 
 const ModelSelector: React.FC<ModelSelectorProps> = ({ models, onAddModel }) => {
   return (
     <div>
-      <h2>Select Models to Add</h2>
       <ul>
         {models.map((model) => (
           <li key={model._id}>
-            {model.prompt}
-            <button onClick={() => onAddModel(model.glb)}>Add to Platter</button>
+            <button onClick={() => onAddModel(model.glb, model.prompt)}>
+                {model.thumbnail_url && (
+                <img
+                    width="50"
+                    height="50"
+                    alt={model.prompt}
+                    src={model.thumbnail_url}
+                    style={{ maxWidth: '100%' }}
+                />
+                )} Add to Platter
+            </button>
           </li>
         ))}
       </ul>
